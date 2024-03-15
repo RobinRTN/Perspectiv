@@ -1,0 +1,45 @@
+<div class="btn-back">
+  <%#= link_to "Retour à #{@mentor.first_name}", mentor_path(@mentor) %>
+  <div class="container mt-3">
+      <div class="institution-show">
+        <div class="institution-details">
+          <h2><%= @institution.name %></h2>
+          <h5><%= @institution.description %></h5>
+        </div>
+        <%= cl_image_tag @institution.photo.key, height: 100, width: 150, crop: :fill, class: "show-picture" %>
+      </div>
+      <div>
+        <%= video_tag(@institution.video.url, size: "820x460", autoplay: false, controls: true, loop: false) %>
+        <h3 class= "header-show">Rencontrez des alumni de l'école</h3>
+      </div>
+  </div>
+  <div class="logo-grid">
+    <div class="logo-grid-row">
+      <div class="logo-grid-group">
+        <% @mentors.each do |mentor| %>
+        <div class="alumni-details">
+          <%= link_to (cl_image_tag mentor.photo.key, crop: :fill, class: "card-avatar"), mentor_path(mentor) %>
+          <p><%= mentor.first_name %></p>
+        </div>
+      <% end %>
+      </div>
+      <div aria-hidden="true" class="logo-grid-group">
+        <% @mentors.each do |mentor| %>
+        <div class="alumni-details">
+          <%= link_to (cl_image_tag mentor.photo.key, crop: :fill, class: "card-avatar"), mentor_path(mentor) %>
+          <p class=><%= mentor.first_name %></p>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%# montrer écoles similaires --> besoin de institution.type %>
+<%# montrer les autres profiles ayant fait cette ecole: display user name & photo //
+<%# profiles similaire (memes tag que le mentor) "voir aussi dans tag" %>
+<%# montrer les entreprises des profiles ayant fait cette école --> no data %>
+
+
+<%# afficher des tag sur la home pour faciliter le search %>

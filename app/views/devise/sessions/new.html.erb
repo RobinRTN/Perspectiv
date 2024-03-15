@@ -1,0 +1,33 @@
+<div id="bg-login">
+  <div class="container-devise login">
+    <div class="col-6">
+      <h2>Se connecter</h2>
+      <div class="form-body">
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo: false}) do |f| %>
+          <div class="form-inputs">
+            <%= f.input :email,
+                        required: false,
+                        autofocus: true,
+                        input_html: { autocomplete: "email" },
+                        input_html: { class: "form-box" } %>
+            <%= f.input :password,
+                        required: false,
+                        input_html: { autocomplete: "current-password" },
+                        input_html: { class: "form-box" } %>
+            <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+          </div>
+
+          <div class="form-actions mb-3">
+            <%= f.button :submit, "Se connecter", class: "btn-confirm-devise" %>
+          </div>
+        <% end %>
+
+        <div class="">
+          <%= render "devise/shared/links", class: "btn-confirm-devise" %>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

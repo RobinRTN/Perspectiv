@@ -1,0 +1,183 @@
+.btn-home:hover {
+  background-color: $purple;
+  color: $white;
+  transition: all 0.5s;
+  margin-top: 50px;
+}
+
+.btn-purple {
+  color: white;
+  display: flex;
+  padding: 1em;
+  border-radius: 10px;
+  height: 2.3rem;
+  background: #9E96FF;
+  align-items: center;
+  border: 1px solid #9E96FF;
+  text-decoration: none;
+  margin-top: 40px;
+  font-size: 2em;
+}
+
+.btn-purple:hover {
+  background: linear-gradient($purple, $light-purple);
+  transition: 0.3s ease;
+  text-decoration: none;
+  color: $white;
+}
+
+.btn-navbar {
+  padding: 5px 15px;
+  margin: -7px;
+  height: 100%;
+  border: 1px solid #ebebeb;
+  font-weight: lighter;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  transition-duration: 0.4s;
+  background: $purple;
+  color: white;
+  min-width: 60px;
+  position: relative;
+  left:0cm;
+}
+
+.btn-navbar:hover {
+  background: linear-gradient($purple, $light-purple);
+  transition: 0.6s ease;
+  text-decoration: none;
+  color: $white;
+}
+
+.btn-chat {
+  color: $white-purple;
+  padding: 5px 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  background:$dark-purple;
+  text-decoration: none;
+  border: 0px solid #ebebeb;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  transition: all 0.4s;
+
+}
+
+.btn-chat:hover {
+  background: $dark-purple;
+  transition: 0.3s ease;
+  text-decoration: none;
+  color: $purple;
+}
+
+.btn-book {
+  color: $white-purple;
+  text-decoration: none;
+  font-weight: 600;
+  background-color: $dark-purple;
+  font-size: 20px;
+  transition: all 0.4s;
+
+}
+
+.btn-book:hover {
+  color: $purple;
+  text-decoration: none;
+}
+
+.btn-back{
+  text-decoration: none;
+}
+
+.link-purple {
+  color: $dark-purple;
+  font-weight: bold;
+  font-family: $headers-font;
+}
+
+.link-purple:hover {
+  color: $purple;
+}
+
+.headers-section {
+  a {
+    text-decoration: none;
+  }
+}
+
+.btn-call-to-action {
+  color: white;
+  display: inline-block;
+  padding: 0.5em 1.3em;
+  border-radius: 10px;
+  background: $dark-purple;
+  border: 1px solid #9E96FF;
+  text-decoration: none;
+  margin-top: 40px;
+  font-size: 1.1em;
+}
+
+.btn-call-to-action:hover {
+  background: $darker-purple;
+  border: 1px solid $white;
+  // border: none;
+  color: $white;
+  // box-shadow: 5px 5px 5px $darker-purple;
+}
+
+.btn-purple-home {
+  color: $dark-purple;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.btn-purple-home:hover {
+  font-weight: bold;
+  color: $dark-purple;
+}
+
+.btn-devise {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-devise a {
+  background-color: $dark-purple;
+  color: white;
+  border: solid 1px;
+  text-decoration: none;
+  font-size: 1em;
+  border-radius: 10px;
+}
+
+.btn-confirm-devise {
+  background-color: $dark-purple;
+  color: white;
+  border: solid 1px;
+  text-decoration: none;
+  font-size: 1em;
+  border-radius: 10px;
+}
+
+.btn-confirm-devise:hover {
+  background-color: $darker-purple;
+  color: white;
+}
+
+.back-button {
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.5s;
+  color: $dark-purple;
+  padding: 5px, 10px;
+  font-size: 15px;
+}
+
+.back-button:hover {
+  font-weight: bold;
+}
+ .back {
+  margin-bottom: 2em;
+ }

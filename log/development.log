@@ -1,0 +1,23 @@
+Started GET "/" for ::1 at 2024-03-15 23:25:17 +0100
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 206.5ms | Allocations: 82140)
+  Rendered layout layouts/application.html.erb (Duration: 206.8ms | Allocations: 82250)
+Completed 500 Internal Server Error in 223ms (ActiveRecord: 0.0ms | Allocations: 88613)
+
+
+  
+ActionView::Template::Error (Error: File to import not found or unreadable: bootstrap/scss/bootstrap.
+        on line 7:1 of app/assets/stylesheets/application.scss
+>> @import "bootstrap/scss/bootstrap";
+
+   ^
+):
+  
+app/assets/stylesheets/application.scss:7
+Started GET "/service-worker.js" for ::1 at 2024-03-15 23:25:19 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/service-worker.js"):
+  

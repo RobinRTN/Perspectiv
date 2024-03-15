@@ -1,0 +1,157 @@
+.conversation {
+  background: $white;
+  border-radius: 10px;
+  height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-top: 0.5em;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  position: sticky !important;
+  top: 90px;
+
+
+  .messages {
+    height: 100%;
+    overflow: scroll;
+    padding: 1rem;
+    p {
+      font-size: 14px;
+    }
+  }
+
+  #new_message {
+    border-top: 1px solid $gray-200;
+    padding: 1rem;
+
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.dashboard-conversation {
+  background: white;
+  border-radius: 10px;
+  height: 55vh;
+  width: 40vw;
+  margin: 0em 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  padding: 1em;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+
+
+
+  .messages {
+    height: 100%;
+    overflow: scroll;
+    p {
+      font-size: 14px;
+    }
+  }
+
+  #new_message {
+    border-top: 1px solid $gray-200;
+    padding: 1em;
+    padding-bottom: 0em;
+
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.conversations-card {
+  background-color: white;
+  margin-top: 1em;
+  width: 95%;
+  margin: 10px;
+  height: 80vh;
+}
+
+
+.message {
+  margin-bottom: 8px;
+  .message-infos {
+    display: flex;
+    align-items: center;
+    margin: 0 4px;
+    font-size: 0.75rem;
+    color: rgb(200, 200, 200);
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+  .message-avatar {
+    height: 35px;
+    width: 35px;
+    object-fit: cover;
+    object-position: center;
+    border: 1px rgb(200, 200, 200) solid;
+    border-radius: 50%;
+    margin: 0 4px;
+  }
+  .message-content {
+    display: flex;
+    p {
+      width: auto;
+      margin: 0;
+      border: 1px rgb(200, 200, 200) solid;
+      background-color: $blue-nice;
+      color: $white;
+      padding: 8px 16px;
+      border-radius: 5px;
+    }
+  }
+}
+
+// This is what displays the message on the right
+.sender-style .message{
+  .message-infos {
+    flex-direction: row-reverse;
+  }
+  .message-content {
+    flex-direction: row-reverse;
+  }
+  .message-inner-content {
+    background-color: $purple;
+    color: white;
+    font-size: 14px;
+  }
+}
+
+.message-row {
+  margin-bottom: 1em;
+}
+
+// To style the message itself
+.sender-style, .receiver-style {
+  width: 70%;
+  max-width: 400px;
+  border-radius: 4px;
+  min-height: 2.5em;
+}
+
+.sender-style {
+  .message-content p {
+    background-color: $purple;
+    color: $white-purple;
+    word-break: break-word;
+  }
+}
+
+.receiver-style {
+  .message-content p {
+    background-color: $blue-nice;
+    color: $white-purple;
+    word-break: break-word;
+  }
+}

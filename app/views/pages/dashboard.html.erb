@@ -1,0 +1,187 @@
+
+<div class="show-background" >
+
+  <div class="container">
+    <div class="banner-mentor d-flex w-100 py-5 d-flex justify-content-center mb-3">
+      <h2>Hello <%= @user.first_name %> ! Bienvenue sur ton tableau de bord 🗺️</h2>
+    </div>
+    <%# Conversations %>
+    <div class="d-flex">
+      <div class="col-9 left-side">
+        <h4>Mes conversations avec les mentors</h4>
+        <div class="d-flex align-items-start me-3">
+          <div class="nav flex-column conversation-cards nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <%# <div class="d-flex conversations-card"> %>
+            <%# <div class="preview-messages"> %>
+              <% if @user.status == "student" %>
+                <% @conversations.each_with_index do |conversation, index| %>
+                  <div class="chat-card nav-link <%= "active" if index.zero? %>" id="v-pills-<%=index%>-tab" data-bs-toggle="pill" data-bs-target="#v-pills-<%=index%>" type="button" role="tab" aria-controls="v-pills-<%=index%>" aria-selected="<%= index.zero? %>">
+                    <%= cl_image_tag conversation.mentor.photo.key, crop: :fill, class: "card-avatar-dashboard" %>
+                    <ul>
+                      <li> <strong><%= conversation.mentor.first_name %> <%= conversation.mentor.last_name %></strong></li>
+                      <li> <%= conversation.messages.last.content[0, 33]... %></li>
+                    </ul>
+                  </div>
+                <% end %>
+              <% else %>
+                <% @conversations.each_with_index do |conversation, index| %>
+                  <div class="chat-card nav-link <%='active' if index.zero?%>" id="v-pills-<%=index%>-tab" data-bs-toggle="pill" data-bs-target="#v-pills-<%=index%>" type="button" role="tab" aria-controls="v-pills-<%=index%>" aria-selected="<%= index.zero? %>">
+                    <%= cl_image_tag conversation.student.photo.key, crop: :fill, class: "card-avatar-dashboard" %>
+                    <ul>
+                      <li><strong><%= conversation.student.first_name %> <%= conversation.student.last_name %></strong></li>
+                      <li> <%= conversation.messages.last.content[0, 33]... %></li>
+                    </ul>
+                  </div>
+                <% end %>
+              <% end %>
+            <%# </div> %>
+          </div>
+
+          <div class="tab-content" id="v-pills-tabContent">
+            <% @conversations.each_with_index do |conversation, index| %>
+              <div class="tab-pane fade <%= 'show active' if index.zero? %>" id="v-pills-<%=index%>" role="tabpanel" aria-labelledby="v-pills-<%=index%>-tab" tabindex="0">
+                <% if conversation.nil? %>
+                  <p> Tu n'as pas encore de messages !</p>
+                <% else %>
+
+                  <div class="dashboard-conversation" data-controller="conversation-subscription" data-conversation-subscription-conversation-id-value="<%= conversation.id %>" data-conversation-subscription-current-user-id-value="<%= current_user.id %>">
+                    <div class="messages flex-grow-1" data-conversation-subscription-target="messages">
+                      <% conversation.messages.each do |message| %>
+                        <% if message.user %>
+                          <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+                            <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
+                              <%= render "messages/message", message: message %>
+                            </div>
+                          </div>
+                        <% else %>
+                          <%= render "messages/schedule", message: message %>
+                          <% if message.meeting.status == "pending" &&  message.conversation.mentor == current_user %>
+                            <p class="" style="">Réponds à la proposition !</p>
+                            <%= link_to "✅", accept_meeting_path(message.meeting), class: "text-decoration-none me-2", data: { turbo_method: :patch } %>
+                            <%= link_to "❌", refuse_meeting_path(message.meeting), class: "text-decoration-none", data: { turbo_method: :patch } %>
+                          <% elsif message.meeting.status == "accepted" &&  message.conversation.mentor == current_user %>
+                            <p class="left-aligned ps-0 mt-1" style="color: green">👍 Validé !</p>
+                            <%= link_to cancel_meeting_path(message.meeting), data: { turbo_method: :patch } do %>
+                              <i class="fa-sharp fa-solid fa-trash"></i>
+                            <% end %>
+                          <% elsif message.meeting.status == "canceled" &&  message.conversation.mentor == current_user%>
+                            <p class="left-aligned ps-0 mt-1" style="color: red">❌ Annulé </p>
+                          <% else %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <%= simple_form_for [conversation, @message],
+                      html: { data: { action: "turbo:submit-end->conversation-subscription#resetForm" }, class: "d-flex text-submit-area"} do |f| %>
+                      <%= f.input :content, as: :string,
+                        label: false,
+                        placeholder: "Message",
+                        wrapper_html: {class: "flex-grow-1"}
+                      %>
+                      <%= button_tag type: :submit, class: "btn-chat mb-3" do %>
+                        <span class="sr-only">Envoyer</span>
+                        <i class="fa-solid fa-paper-plane" ></i>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3 meetings">
+        <nav>
+          <div class="nav nav-tabs menu-meetings" id="nav-tab" role="tablist">
+            <button class="nav-link button-rdv active" id="nav-futur-tab" data-bs-toggle="tab" data-bs-target="#nav-futur" type="button" role="tab" aria-controls="nav-futur" aria-selected="true">Futurs RDV</button>
+            <button class="nav-link button-rdv" id="nav-passé-tab" data-bs-toggle="tab" data-bs-target="#nav-passé" type="button" role="tab" aria-controls="nav-passé" aria-selected="false">RDV passés</button>
+          </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-futur" role="tabpanel" aria-labelledby="nav-futur-tab" tabindex="0">
+            <div class="upcoming-meetings">
+              <% if @user.status == "student" %>
+                <% @upcoming_meetings.each do |meeting| %>
+                  <%= link_to mentor_path(User.find(meeting.mentor_id)) do %>
+                    <div class="meeting-card">
+                      <div class="d-flex align-items-center">
+                        <%= cl_image_tag User.find(meeting.mentor_id).photo.key, crop: :fill, class: "card-avatar-dashboard" %>
+                        <div class="card-infos">
+                          <ul>
+                            <li> <h5><%= User.find(meeting.mentor_id).first_name %> <%= User.find(meeting.mentor_id).last_name %></h5></li>
+                            <li> <strong><%= User.find(meeting.mentor_id).experiences.first.position %></strong> chez <%= User.find(meeting.mentor_id).experiences.first.company %></li>
+                            <li> Le <strong><%= l(meeting.starting, format: '%-d %B %Y') %></strong> </li>
+                            <li> à <strong><%= l(meeting.starting, format: '%l') %></strong> : <strong><%= l(meeting.starting, format: '%M') %></strong> </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+
+              <% else %>
+                <% @upcoming_meetings.each do |meeting| %>
+                  <div class="meeting-card">
+                    <div class="d-flex">
+                      <%= cl_image_tag User.find(meeting.student_id).photo.key, height: 300, width: 400, crop: :fill, class: "card-avatar-dashboard" %>
+                      <div class="card-infos">
+                        <ul>
+                          <li> <h5><%= User.find(meeting.student_id).first_name %> <%= User.find(meeting.student_id).last_name %></h5></li>
+                          <li> <%= User.find(meeting.student_id).age %> ans </li>
+                          <li> Le <strong><%= l(meeting.starting, format: '%-d %B %Y') %></strong> </li>
+                          <li> à <strong><%= l(meeting.starting, format: '%l %M') %></strong> </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="nav-passé" role="tabpanel" aria-labelledby="nav-passé-tab" tabindex="0">
+            <div class="past-meetings">
+
+              <% if @user.status == "student" %>
+                <% @past_meetings.each do |meeting| %>
+                  <%= link_to mentor_path(User.find(meeting.mentor_id)) do %>
+                    <div class="meeting-card">
+                      <%= cl_image_tag User.find(meeting.mentor_id).photo.key, crop: :fill, class: "card-avatar-dashboard" %>
+                      <div class="card-infos">
+                        <ul>
+                          <li> <h5><%= User.find(meeting.mentor_id).first_name %> <%= User.find(meeting.mentor_id).last_name %></h5></li>
+                          <li> <strong><%= User.find(meeting.mentor_id).experiences.first.position %></strong> chez <%= User.find(meeting.mentor_id).experiences.first.company %></li>
+                        <li> Le <strong><%= l(meeting.starting, format: '%-d %B %Y') %></strong> </li>
+                        <li> à <strong><%= l(meeting.starting, format: '%l %M') %></strong> </li>
+                        </ul>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <% @past_meetings.each do |meeting| %>
+                  <div class="meeting-card">
+                    <%= cl_image_tag User.find(meeting.student_id).photo.key, crop: :fill, class: "card-avatar-dashboard" %>
+                    <div class="card-infos">
+                      <ul>
+                        <li> <h5> <%= User.find(meeting.student_id).first_name %> <%= User.find(meeting.student_id).last_name %> </h5> </li>
+                        <li> <%= User.find(meeting.student_id).age %> ans </li>
+                        <li> Le <strong><%= l(meeting.starting, format: '%-d %B %Y') %></strong> </li>
+                        <li> à <strong><%= l(meeting.starting, format: '%l %M') %></strong> </li>
+                      </ul>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<% mentors = institution.users.where(status: "mentor") %>
+
+<!-- Modal -->
+<div class="modal fade" id="institutionModal<%= institution.id %>" tabindex="-1" aria-labelledby="institutionModalLabel<%= institution.id %>" aria-hidden="true">
+  <div class="modal-dialog" id="institution">
+    <div class="modal-content" id="instit">
+
+      <div class="modal-body">
+
+        <div class="container mt-3">
+            <div class="institution-show">
+              <div class="institution-details align-items-sm-start d-flex flex-column flex-grow-1 institution-details justify-content-center">
+                <h2><%= institution.name %></h2>
+                <h5><%= institution.description %></h5>
+              </div>
+              <%= cl_image_tag institution.photo.key, height: 100, width: 150, crop: :fill, class: "card-avatar" %>
+            </div>
+            <div>
+              <%= video_tag(institution.video.url, size: "820x460", autoplay: false, controls: true, loop: false) %>
+              <h3 class= "header-show">Rencontrez des alumni de l'école</h3>
+            </div>
+        </div>
+        <div class="logo-grid">
+          <div class="logo-grid-row">
+            <div class="logo-grid-group">
+              <% mentors.each do |mentor| %>
+              <div class="alumni-details">
+                <%= link_to (cl_image_tag mentor.photo.key, crop: :fill, class: "card-avatar"), mentor_path(mentor) %>
+                <p><%= mentor.first_name %></p>
+              </div>
+            <% end %>
+            </div>
+            <div aria-hidden="true" class="logo-grid-group">
+              <% mentors.each do |mentor| %>
+              <div class="alumni-details">
+                <%= link_to (cl_image_tag mentor.photo.key, crop: :fill, class: "card-avatar"), mentor_path(mentor) %>
+                <p class=><%= mentor.first_name %></p>
+              </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<% mentors.each do |mentor| %>
+    <%= link_to mentor_path(mentor) do %>
+      <div class="card-mentor-vertical">
+        <% if mentor.photo.attached? %>
+          <%= cl_image_tag mentor.photo.key, crop: :fill, class: 'card-mentor-vertical-avatar' %>
+        <% else %>
+          <%= image_tag 'https://img.freepik.com/photos-gratuite/outils-sport_53876-138077.jpg?w=2000', class: 'card-mentor-vertical-avatar' %>
+        <% end%>
+        <div class="d-flex flex-column align-items-center">
+          <h4 class="card-fullname"> <%= mentor.first_name %> <%= mentor.last_name %></h4>
+          <p class="card-age"> <%= mentor.age %> ans</p>
+        </div>
+          <p class="card-position"> <%= mentor.experiences.first.position %></p>
+          <div class="school-info">
+            <p class="card-school"> <%= mentor.educations.first.institution.name %></p>
+            <%= cl_image_tag mentor.educations.first.institution.photo.key, crop: :fill, class: 'logo-school' %>
+          </div>
+          <div class="tags">
+            <p class="card-tag">#<%= mentor.experiences.first.sector %></p>
+            <p class="card-tag">#<%= mentor.experiences.first.industry.split(" ").first %></p>
+          </div>
+       </div>
+      <% end %>
+    <% end %>
+<% if @mentors.empty? %>
+  <h3>Nous sommes désolés, aucun résultat ne correspond à ta recherche.</h3>
+<% end %>

@@ -1,0 +1,25 @@
+
+        <%pattern = "%H:%M"  %>
+        <div class="d-flex">
+          <% time_slots.each_with_index do |slot, i| %>
+            <% if i % 7 == 0 || i == 0 %>
+              <% unless i == 0 %>
+              </div>
+              <% end %>
+              <div class="d-flex flex-column" style="width: 20%;">
+            <% end %>
+              <%= simple_form_for @meeting do |f| %>
+                <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                <%= f.hidden_field :status, value: "pending" %>
+                <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                  <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                <% else %>
+                  <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>

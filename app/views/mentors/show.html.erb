@@ -1,0 +1,250 @@
+<div class="show-background" >
+  <div class="container">
+    <div class="banner-mentor w-100 d-flex justify-content-between mb-3 position-relative" >
+      <div class="banner-mentor-description d-flex flex-column justify-content-center">
+        <div class="back">
+          <%= link_to "< Découvrir d'autres mentors", mentors_path, class:"back-button" %>
+        </div>
+        <h1> <%= @mentor.first_name %> <%= @mentor.last_name %></h1>
+        <p><%=@mentor.description%></p>
+        <div class="tags">
+          <p class="card-tag">#<%= @mentor.experiences.first.sector %></p>
+          <p class="card-tag">#<%= @mentor.experiences.first.industry.split(" ").first %></p>
+        </div>
+      </div>
+      <div class="call-to-action">
+      </div>
+      <div class="me-5 banner-mentor-picture">
+        <% if @mentor.photo.attached? %>
+          <%= cl_image_tag @mentor.photo.key, crop: :fill, class:"card-mentor-vertical-avatar" %>
+        <% else %>
+          <p>No picture attached</p>
+        <% end%>
+        <span class="dot position-absolute"></span>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3 position-relative">
+      <div class="left-side-description mt-2 px-4 col-6">
+        <h4 class="text-center">Présentation de <%=@mentor.first_name%></h4>
+        <h5 class="subtitle mb-3">💼 Carrière</h5>
+        <%@experiences.each do |experience| %>
+          <div class="experience-card mb-3">
+            <div class="sub-title-experience d-flex justify-content-between">
+              <h6><%= experience.position %></h6>
+              <div class="dates-mentor-experience">
+                <p><em>Depuis : </em><%= experience.start_date %></p>
+                <% unless experience.end_date.nil?  %>
+                  <p><em>Jusqu'à : </em><%= experience.end_date %></p>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="details-experience">
+              <p><strong>Secteur : </strong> <%= experience.sector.capitalize %></p>
+              <p><strong>Expertise : </strong><%= experience.industry.capitalize %></p>
+            <% unless experience.salary.nil?  %>
+              <p>Salaire : <%= experience.salary %></p>
+            <% end %>
+          </div>
+        </div>
+      <%end%>
+
+      <div class="education">
+        <h5 class="mt-5 subtitle mb-3"> 📚 Etudes</h5>
+        <%@educations.each do |education| %>
+          <div class="experience-card mb-3 cursor-pointer" data-bs-toggle="modal" data-bs-target="#institutionModal<%= education.institution.id  %>">
+            <div class="sub-title-study d-flex justify-content-between">
+              <h6><%= education.institution.name %></h6>
+              <%= render "shared/institution", institution: education.institution %>
+              <div class="dates-mentor-study">
+                <p><em>Depuis : </em><%= education.start_date %></p>
+                <% unless education.end_date.nil?  %>
+                  <p><em>Jusqu'à : </em><%= education.end_date %></p>
+                <% end %>
+              </div>
+            </div>
+              <div class="details-education">
+                <p> <strong>Niveau d'études : </strong><%= education.degree_level.capitalize %> </p>
+                <p> <strong>Domaine d'études : </strong><%= education.field.capitalize %> </p>
+              </div>
+              <% render "shared/institution", institution: education.institution %>
+          </div>
+        <%end%>
+      </div>
+
+      <% unless @contents.empty? %>
+        <h4 class="mt-5 subtitle mb-3"> 🎥 Videos </h4>
+        <div class="card-video mb-4">
+          <%= video_tag(@contents.first.video.url, autoplay: false, controls: true, loop: false) %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="right-side-chat conversation mx-5 position-relative col-4" data-controller="conversation-subscription" data-conversation-subscription-conversation-id-value="<%= @conversation.id %>" data-conversation-subscription-current-user-id-value="<%= current_user.id %>">
+      <div class="top-message-name-show d-flex justify-content-between align-items-center">
+        <p class="text-center py-1"><%= @mentor.first_name %> <%= @mentor.last_name %> - en ligne</p>
+        <button type="button" class="btn btn-book" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="fa-solid fa-calendar-week"></i>
+        </button>
+    </div>
+
+    <div class="messages" data-conversation-subscription-target="messages">
+        <% @conversation.messages.each do |message| %>
+          <% if message.user %>
+            <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+              <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
+                <%= render "messages/message", message: message %>
+              </div>
+            </div>
+          <% else %>
+            <%= render "messages/schedule", message: message %>
+          <% end %>
+        <% end %>
+    </div>
+
+        <%= simple_form_for [@conversation, @message],
+          html: { data: { action: "turbo:submit-end->conversation-subscription#resetForm" }, class: "d-flex"} do |f| %>
+          <%= f.input :content, as: :string,
+            label: false,
+            placeholder: "Message",
+            wrapper_html: {class: "flex-grow-1"}
+          %>
+          <%= button_tag type: :submit, class: "btn-chat mb-3" do %>
+            <span class="sr-only">Envoyer</span>
+            <i class="fa-solid fa-paper-plane" ></i>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-show">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Propose un créneau à <%= @mentor.first_name %> ! 🙂</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <% pattern = "%H:%M"  %>
+
+            <div class="d-flex justify-content-center">
+              <div class="d-flex flex-column mx-1" style="width: 15%;">
+                <div><p class="text-center">12/12</p>
+                  <% time_slots[0..6].each_with_index do |slot, i| %>
+                    <%= simple_form_for @meeting do |f| %>
+                      <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                      <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                      <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                      <%= f.hidden_field :status, value: "pending" %>
+                      <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column mx-1" style="width: 15%;">
+                <div><p class="text-center">13/12</p>
+                  <% time_slots[7..13].each_with_index do |slot, i| %>
+                    <%= simple_form_for @meeting do |f| %>
+                      <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                      <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                      <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                      <%= f.hidden_field :status, value: "pending" %>
+                      <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column mx-1" style="width: 15%;">
+                <div><p class="text-center">14/12</p>
+                  <% time_slots[14..20].each_with_index do |slot, i| %>
+                    <%= simple_form_for @meeting do |f| %>
+                      <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                      <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                      <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                      <%= f.hidden_field :status, value: "pending" %>
+                      <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column mx-1" style="width: 15%;">
+                <div><p class="text-center">15/12</p>
+                  <% time_slots[21..27].each_with_index do |slot, i| %>
+                    <%= simple_form_for @meeting do |f| %>
+                      <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                      <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                      <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                      <%= f.hidden_field :status, value: "pending" %>
+                      <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column mx-1" style="width: 15%;">
+                <div><p class="text-center">16/12</p>
+                  <% time_slots[28..34].each_with_index do |slot, i| %>
+                    <%= simple_form_for @meeting do |f| %>
+                      <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                      <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                      <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                      <%= f.hidden_field :status, value: "pending" %>
+                      <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column mx-1" style="width: 15%;">
+                <div><p class="text-center">17/12</p>
+                  <% time_slots[35..41].each_with_index do |slot, i| %>
+                    <%= simple_form_for @meeting do |f| %>
+                      <%= f.hidden_field :starting, value: DateTime.parse(slot) %>
+                      <%= f.hidden_field :ending, value: DateTime.parse(slot) + 1.hour %>
+                      <%= f.hidden_field :mentor_id, value: @mentor.id %>
+                      <%= f.hidden_field :status, value: "pending" %>
+                      <% if Meeting.all.where(starting: DateTime.parse(slot)).empty?  %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= f.submit DateTime.parse(slot).strftime(pattern), class: "btn btn-primary disabled" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

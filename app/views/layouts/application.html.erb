@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title><%= meta_title %></title>
+    <meta name="description" content="<%= meta_description %>">
+
+    <meta property="og:title" content="<%= meta_title %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= meta_image %>">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:site_name" content="<%= meta_title %>">
+
+    <!-- Facebook Open Graph data -->
+    <meta property="og:title" content="<%= meta_title %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:image" content="<%= meta_image %>" />
+    <meta property="og:description" content="<%= meta_description %>" />
+    <meta property="og:site_name" content="<%= meta_title %>" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="<%= DEFAULT_META["twitter_account"] %>">
+    <meta name="twitter:title" content="<%= meta_title %>">
+    <meta name="twitter:description" content="<%= meta_description %>">
+    <meta name="twitter:creator" content="<%= DEFAULT_META["twitter_account"] %>">
+    <meta name="twitter:image:src" content="<%= meta_image %>">
+
+    <title>Perspectiv</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= favicon_link_tag "logo-short.png", rel: "icon", type: "image/png" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <%= render "shared/navbar" %>
+    <div class="wrapper">
+      <%= yield %>
+    </div>
+    <%= render "shared/flashes" %>
+    <%= render "shared/footer" unless action_name == "new" || action_name == "student_infos" || action_name == "update" || action_name == "create" %>
+  </body>
+</html>
+
+<%# if action_name == "home" || action_name == "index"  %>

@@ -1,0 +1,120 @@
+// success colors
+$green: rgba(96, 211, 148, 1);
+$lightgreen: rgba(175, 233, 201, 1);
+$darkgreen: rgba(44, 160, 96, 1);
+// alert colors
+$red: rgba(238, 99, 82, 1);
+$lightred: rgba(246, 172, 162, 1);
+$darkred: rgba(167, 34, 17, 1);
+// notice colors
+$blue: rgba(63, 167, 214, 1);
+$lightblue: rgba(137, 201, 230, 1);
+$darkblue: rgba(36, 126, 168, 1);
+// warning colors
+$yellow: rgba(250, 192, 94, 1);
+$lightyellow: rgba(252, 217, 156, 1);
+$darkyellow: rgba(218, 140, 7, 1);
+
+$black: black;
+$dark-purple: #302D31;
+$darker-purple: #4d484f;
+$purple: #9E96FF;
+$light-purple: #BFBCFD;
+$white-purple : #eaeaf9;
+$orange: rgb(250, 201, 163);
+$orange-bg: rgba(250, 201, 163, 0.4);
+$light-orange: #FAF3EE;
+$light-gray: #F4F4F4;
+$white : white;
+$blue-nice : #90a4f9;
+
+.flashes-container {
+  position: fixed;
+  z-index: 50;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 15vw;
+  max-width: 450px;
+  .flash {
+    transition-duration: all ease 1s;
+    .flash-content {
+      position: relative;
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      padding: 1rem 2rem;
+      p {
+        margin: 0px;
+      }
+    }
+    .flash-close {
+      position: absolute;
+      transition: all ease 0.35s;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 0.5rem;
+      right: auto;
+      cursor: pointer;
+      opacity: 0.7;
+      border-radius: 0.25rem;
+      &:hover { opacity: 1; }
+      svg {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+    }
+    .flash-message {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 1.5rem;
+      pointer-events: none;
+    }
+    &.flash-success {
+      .flash-content {
+        background-color: $purple ;
+        color: $dark-purple;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+      }
+      .flash-close:hover { background-color: $purple; }
+    }
+    &.flash-notice {
+      .flash-content {
+        background-color: $purple ;
+        color: $dark-purple;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+      }
+      .flash-close:hover { background-color: $purple; }
+    }
+    &.flash-warning {
+      .flash-content {
+        background-color: $purple ;
+        color: $dark-purple;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+      }
+      .flash-close:hover { background-color: $purple; }
+    }
+    &.flash-alert {
+      .flash-content {
+        background-color: $purple ;
+        color: $dark-purple;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+      }
+      .flash-close:hover { background-color: $purple; }
+    }
+  }
+}
+
+.slide-right {
+  animation: slide-right .75s ease forwards;
+}
+
+@keyframes slide-right {
+  0% { transform: translateX(0%); }
+  25% { transform: translateX(-10%); }
+  100% { transform: translateX(200%) rotate(0deg); }
+}

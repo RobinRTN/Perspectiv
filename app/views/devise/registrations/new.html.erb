@@ -1,0 +1,57 @@
+<div class="page">
+  <div class="container registration" data-controller="onboarding" data-action="load->onboarding#topScroll"  data-action="wheel->onboarding#preventScroll">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo: false}) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="col-8 offset-2 form-div" id="quizz-status">
+        <%#= f.collection_radio_buttons :status, [["student", "Lycéen ou étudiant, je cherche ma voie 🧑‍🎓"], ["mentor", "Professionnel, j'aimerais partager mon experience 💼"]], :first, :last, checked: false, input_html: { class: 'path-btn', data: { action: "change->onboarding#next"} } %>
+        <%= f.input :status, as: :radio_buttons, collection: [["Lycéen ou étudiant, je cherche ma voie 🧑‍🎓", "student"], ["Professionnel, j'aimerais partager mon expérience 💼", "mentor"]], :label => false, input_html: { checked: false, class: 'path-btn', data: { action: "change->onboarding#next"} } %>
+        <a href="#quizz-registration" class="scroll-button d-none" data-controller="scroll-to" data-onboarding-target="next">Passe à la suite 👇</a>
+      </div>
+
+      <%# Standard Registration %>
+      <div class="student-form">
+
+        <div class="d-flex form-inputs">
+          <div class="col-8 offset-2 form-div mx-auto" id="quizz-registration">
+            <h5>Avant toute chose, on a besoin de quelques renseignements sur toi !</h5>
+            <div class="name d-flex">
+              <%= f.input :first_name,
+                          :label => false,
+                          required: true,
+                          autofocus: true,
+                          placeholder: "Ton prénom",
+                          input_html: { class: "form-box" } %>
+              <%= f.input :last_name,
+                          :label => false,
+                          placeholder: "Ton nom de famille",
+                          required: true,
+                          autofocus: true,
+                          input_html: { class: "form-box", "data-onboarding-target" => "firstNameInput" } %>
+            </div>
+            <%= f.input :email,
+                        :label => false,
+                        placeholder: "Ton mail",
+                        required: true,
+                        autofocus: true,
+                        input_html: { class: "form-box" } %>
+            <%= f.input :password,
+                        :label => false,
+                        required: true,
+                        placeholder: "Ton meilleur mot de passe",
+                        hint: ("#{@minimum_password_length} caractères au minimum 😉" if @minimum_password_length),
+                        input_html: { class: "form-box" } %>
+            <%= f.input :password_confirmation,
+                        :label => false,
+                        placeholder: "Tu peux nous le reconfirmer ici ?",
+                        required: true,
+                        input_html: { class: "form-box" } %>
+            <div class="form-actions">
+              <%= f.button :submit, "Go 🚀", class: "btn-go" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

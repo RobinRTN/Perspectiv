@@ -1,0 +1,66 @@
+<div class="bg-home" >
+  <div class="container" data-controller="search-mentors">
+    <div class="filters">
+    <%# search avec texte %>
+      <div class= "form-home" >
+        <div class="container d-flex justify-content-between align-items-center">
+          <%= form_with url: mentors_path, method: :get, class: "d-flex w-100", html: { 'data-search-mentors-target' => 'form' } do |f| %>
+            <div class="trucmuche flex-grow-1">
+              <%= text_field_tag :query,
+                                  params[:query],
+                                  class: "search-words search-mentor w-100",
+                                  placeholder: "Trouve ton Mentor... ",
+                                  data: {
+                                    search_mentors_target: "input",
+                                    action: "keyup->search-mentors#update"
+                                  } %>
+            </div>
+            <%= f.select :position,
+                          options_for_select(
+                            Experience.all.pluck(:position).uniq.sort,
+                            selected: params[:position],
+                          ),
+                          { include_blank: 'Poste' },
+                          'data-action' => 'change->search-mentors#update',
+                          'data-search-mentors-target': 'positionInput',
+                          class: "search-words"%>
+            <%= f.select :sector,
+                          options_for_select(
+                            Experience.all.pluck(:sector).uniq.sort,
+                            selected: params[:sector]
+                          ),
+                          { include_blank: "Secteur" },
+                          'data-action' => 'change->search-mentors#update',
+                          'data-search-mentors-target': 'sectorInput',
+                          class: "search-words" %>
+            <%= f.select :industry,
+                          options_for_select(
+                            Experience.all.pluck(:industry).uniq.sort,
+                            selected: params[:industry]
+                          ),
+                          {include_blank: "Industrie"},
+                          'data-action' => 'change->search-mentors#update',
+                          'data-search-mentors-target': 'industryInput',
+                          class: "search-words" %>
+            <%= f.select :field,
+                          options_for_select(
+                            Education.all.pluck(:field).uniq.sort,
+                            selected: params[:field]
+                          ),
+                          {include_blank: "Domaine d'études"},
+                          'data-action' => 'change->search-mentors#update',
+                          'data-search-mentors-target': 'fieldInput',
+                          class: "search-words" %>
+          <% end %>
+          <%= link_to mentors_path, class: "sup-filter" do %>
+          <i class="fa-solid fa-arrow-rotate-right"></i>
+          <% end %>
+        </div>
+      </div>
+      <%  %>
+    </div>
+    <div data-search-mentors-target="list" class="list-mentors">
+      <%= render "list", mentors: @mentors %>
+    </div>
+    </div>
+</div>

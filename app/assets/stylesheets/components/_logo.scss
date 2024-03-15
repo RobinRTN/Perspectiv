@@ -1,0 +1,53 @@
+.logo-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: auto;
+  max-width: 100vw;
+}
+
+.logo-grid-row {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 32px;
+}
+
+.logo-grid-group{
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: space-around;
+  gap: 32px;
+  min-width: 100%;
+  animation: scroll-x 30s linear infinite;
+}
+
+.logo-grid-row:hover .logo-grid-group {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-x {
+  from {
+    transform:translateX(0)
+  }
+  to {
+    transform:translateX(calc(-100% - 32px))
+  }
+}
+
+.institution-show{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.header-show{
+  margin-top: 20px;
+}
+
+.alumni-details{
+  display:flex;
+  flex-direction: column;
+  text-align:center;
+}

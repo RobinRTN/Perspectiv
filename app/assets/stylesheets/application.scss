@@ -1,0 +1,18 @@
+// Graphical variables
+@import "config/fonts";
+@import "config/colors";
+@import "config/bootstrap_variables";
+
+// External libraries
+@import "bootstrap/scss/bootstrap";
+@import "font-awesome";
+@import "swiper/swiper-bundle";
+
+// Your CSS partials
+@import "components/index";
+@import "pages/index";
+
+
+.wrapper{
+  min-height: calc(100vh - 184px - 24px - 30px - 60px);
+}

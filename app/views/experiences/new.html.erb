@@ -1,0 +1,12 @@
+ <%= simple_form_for(@experience) do |f| %>
+    <%= f.input :company %>
+    <%= f.input :position %>
+    <%= f.input :sector %>
+    <%= f.input :industry %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.input :salary, collection: Experience::SALARY_RANGES %>
+    <div class="d-grid gap-2">
+      <%= f.submit 'Add a new experience', class: "btn btn-primary"%>
+    </div>
+  <% end %>

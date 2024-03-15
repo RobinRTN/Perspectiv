@@ -1,0 +1,14 @@
+<div class="container form-edit">
+  <div class="header-form">
+    <h2> Your new meeting </h2>
+  </div>
+
+  <%= simple_form_for(@meeting) do |f| %>
+    <%= f.input :starting %>
+    <%= f.input :ending %>
+    <%= f.input :mentor_id, collection: @mentors %>
+    <div class="d-grid gap-2">
+      <%= f.submit 'Create Meeting', class: "btn btn-primary"%>
+    </div>
+  <% end %>
+</div>

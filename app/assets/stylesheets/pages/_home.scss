@@ -1,0 +1,94 @@
+// Specific CSS for your home-page
+h1 {
+  color: $dark-purple;
+  font-size: 70px;
+  margin-bottom: 35px;
+  font-weight: 800;
+}
+
+h2{
+  color: $dark-purple;
+  font-size: 36px;
+}
+
+h5 {
+  font-weight: bold;
+}
+
+.home-steps {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin-top: 50px;
+}
+
+.step-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  width: 25em;
+  height: auto;
+  color: $dark-purple;
+  border: 1px solid lightgray ;
+  border-radius: 50px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  margin: 20px;
+  i {
+    font-size: 50px;
+    color: $orange;
+    margin-bottom: 30px;
+  }
+}
+
+.section {
+  margin-top: 3em;
+  padding: 1em;
+  background-color: rgba($color: $white, $alpha: 0.45) ;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.scroll-horizontal{
+  display: flex;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 10px;
+  margin: 0;
+  white-space: nowrap;
+  grid-gap: 1em;
+}
+
+.bg-home {
+  background-color: #4158D0;
+  background: linear-gradient(324deg, $blue-nice, $orange-bg, $purple);
+  background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+  padding-bottom: 2em;
+}
+
+#bg-login {
+  background-color: #4158D0;
+  background: linear-gradient(324deg, $blue-nice, $orange-bg, $purple);
+  background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+  padding-bottom: 2em;
+  height: 100vh;
+}
+
+.bg-landing {
+  padding-left: 5%;
+  padding-right:5%;
+  background-color: $purple;
+}
+
+.logo-big {
+  width: 100%;
+  margin-bottom: 1.2em;
+}
+
+.logo-short {
+  width: 40px;
+}

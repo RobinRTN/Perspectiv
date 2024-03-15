@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="all-videos">
+    <% @contents.each do |content| %>
+      <div class="card-video">
+        <% if content.video.attached?  %>
+          <div class="card-title"><%= content.title %></div>
+          <%= video_tag(content.video.url, autoplay: false, controls: true, loop: false) %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

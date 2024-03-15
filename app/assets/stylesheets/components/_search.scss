@@ -1,0 +1,42 @@
+.search-words {
+  border: 1px solid #ebebeb;
+  font-weight: lighter;
+  padding: 5px 15px;
+  color: #757575;
+  border-left: 0px;
+}
+
+.search-mentor {
+  border-left: 1px solid #ebebeb;
+}
+
+
+.form-home {
+  display: flex;
+  padding: 1em;
+  position: fixed;
+  top: 60px;
+  z-index: 5000;
+  background-color: $white-purple;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-top: solid 1px #CFCFCF ;
+}
+
+.list-mentors {
+  margin-top: 6em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 19.5vw);
+  justify-content: space-between;
+}
+
+.sup-filter {
+  color: #757575;
+  padding: 5px 0 5px 15px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,59 @@
+.preview-messages {
+  border-right: $dark-purple solid 1px;
+}
+
+
+.left-side h4 {
+  margin-left: 0.3em;
+  margin-bottom: 1em;
+}
+
+.top-message-name-dashboard {
+  background-color: $dark-purple;
+  color: white;
+  font-weight: bold;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.nav-pills {
+  border-radius: 10px;
+}
+
+.nav-pills .nav-link.active {
+  background-color: $purple;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+
+}
+
+.conversation-cards {
+  flex: 0 0 250px;
+}
+
+.meetings {
+  margin-top: 4.3em;
+  .nav-tabs .nav-link.active {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+
+  }
+
+  .nav-tabs .nav-link {
+    border: none;
+    padding: 0.5em 0.2em 0.5em 0.2em !important;
+    margin-right: 0.5em;
+
+  }
+}
+
+.banner-mentor h2 {
+  font-weight: 600;
+}
+
+.menu-meetings {
+  margin-left: 0.63em;
+  --bs-nav-tabs-border-width: 0px;}

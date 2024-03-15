@@ -1,0 +1,15 @@
+<%= link_to mentor_path(mentor) do %>
+<div class="item">
+  <div class="card-horizontal">
+    <%= cl_image_tag mentor.photo.key, class: "card-avatar" %>
+    <div class="card-info">
+      <h4 class="card-fullname"><%= mentor.first_name %> <%= mentor.last_name %></h4>
+      <div class="card-position"><%= mentor.experiences.first.position %></div>
+      <div class="tags">
+        <div class="card-tag">#<%= mentor.experiences.first.sector %></div>
+        <div class="card-tag">#<%= mentor.experiences.first.industry %></div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

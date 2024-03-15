@@ -1,0 +1,78 @@
+<% if current_page?(controller: '/pages', action: 'home') && !user_signed_in? %>
+  <div class="navbar navbar-expand-sm navbar-light" data-controller="navbar" data-action="scroll@window->navbar#updateNavbar">
+<% elsif current_page?(controller: 'users/registrations', action: 'new')|| current_page?(controller: '/pages', action: 'student_infos') %>
+  <div class="navbar-onboarding navbar-expand-sm navbar-light">
+<% else %>
+  <div class="navbar-normal navbar-expand-sm navbar-light">
+<% end %>
+
+  <div class="container">
+      <div class="navbar-elements">
+        <div>
+          <%= link_to root_path, class: "navbar-brand" do %>
+            <%= image_tag "logo-short.png", class: "logo-short"%>
+          <% end %>
+        </div>
+        <div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+              <% if user_signed_in? %>
+                <% if current_user.student? %>
+                  <li class="nav-item active">
+                    <%= link_to "Mentors", mentors_path, class: "nav-link btn-purple-home" %>
+                  </li>
+                  <%# <li class="nav-item"> %>
+                    <%# <%= link_to "Videos", contents_path, class: "nav-link btn-purple-home" %>
+                  <%# </li> %>
+                  <li class="nav-item">
+                    <%= link_to "Tableau de bord", dashboard_path, class: "nav-link btn-purple-home" %>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <% if current_user.photo.attached? %>
+                      <%= cl_image_tag current_user.photo.key, class: "avatar navbar-avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                    <% else %>
+                      <%= image_tag "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                    <% end %>
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <%= link_to "Mon profil", edit_user_registration_path, class: "dropdown-item btn-purple-home" %>
+                    <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item btn-purple-home" %>
+                  </div>
+                  </li>
+                  <% else %>
+                  <li class="nav-item">
+                    <%= link_to "Poste une vidéo",new_content_path, class: "nav-link btn-purple-home" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "Tableau de bord",dashboard_path, class: "nav-link btn-purple-home" %>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <% if current_user.photo.attached? %>
+                      <%= cl_image_tag current_user.photo.key, class: "avatar navbar-avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                    <% else %>
+                      <%= image_tag "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                    <% end %>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                      <%= link_to "Mon prfil", "#", class: "dropdown-item btn-purple-home" %>
+                      <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item btn-purple-home" %>
+                    </div>
+                  </li>
+                  <% end %>
+              <% else %>
+                <li class="nav-item">
+                  <%= link_to "Se connecter", new_user_session_path, class: "nav-link btn-purple-home" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link btn-purple-home" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  </div>
+</div>

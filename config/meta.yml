@@ -1,0 +1,5 @@
+meta_name: "Perspectiv"
+meta_title: "Viens échanger avec nos mentors et trouve ta voie !"
+meta_description: "Echange avec des mentors inspirants"
+meta_image: "meta.jpg" # should exist in `app/assets/images/`
+twitter_account: "@PapNdiaye"   # required for Twitter Cards

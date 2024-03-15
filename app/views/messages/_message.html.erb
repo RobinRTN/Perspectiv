@@ -1,0 +1,17 @@
+<% sender = message.user == current_user %>
+
+<!-- the message will display on the right side of the chat
+     if the `sender` class is present -->
+<div class="message">
+  <div class="message-infos">
+    <p><span class="user-name"><%= message.user.first_name %></span> at <%= message.created_at.strftime("%H:%M") %></p>
+  </div>
+  <div class="message-content">
+    <% if message.user.photo.attached? %>
+      <%= cl_image_tag message.user.photo.key, crop: :fill, alt: "#{message.user.first_name}'s avatar", class: 'message-avatar' %>
+       <% else %>
+        <%= image_tag "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=", class: "message-avatar", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+      <% end %>
+    <p class="message-inner-content"><%= message.content %></p>
+  </div>
+</div>
